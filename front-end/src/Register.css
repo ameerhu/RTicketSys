@@ -1,0 +1,10 @@
+.Boxx{
+    margin-top: 1%;
+}
+
+.BtnCntl {
+    width: 30%;
+    display: "flex";
+    justify-content: "center";
+    align-items: "center";
+}
