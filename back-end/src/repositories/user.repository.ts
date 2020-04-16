@@ -4,6 +4,11 @@ import {DbDataSource} from '../datasources';
 import {inject, Getter} from '@loopback/core';
 import {SlotRepository} from './slot.repository';
 
+export interface Credentials {
+  email: string;
+  password: string;
+}
+
 export class UserRepository extends DefaultCrudRepository<
   User,
   typeof User.prototype.id,

@@ -19,7 +19,7 @@ import {
   User,
   Slot,
 } from '../models';
-import {UserRepository} from '../repositories';
+import { UserRepository } from '../repositories';
 
 export class UserSlotController {
   constructor(
@@ -49,7 +49,7 @@ export class UserSlotController {
     responses: {
       '200': {
         description: 'User model instance',
-        content: {'application/json': {schema: getModelSchemaRef(Slot)}},
+        content: { 'application/json': { schema: getModelSchemaRef(Slot) } },
       },
     },
   })
@@ -74,7 +74,7 @@ export class UserSlotController {
     responses: {
       '200': {
         description: 'User.Slot PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: { 'application/json': { schema: CountSchema } },
       },
     },
   })
@@ -83,7 +83,7 @@ export class UserSlotController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Slot, {partial: true}),
+          schema: getModelSchemaRef(Slot, { partial: true }),
         },
       },
     })
@@ -97,7 +97,7 @@ export class UserSlotController {
     responses: {
       '200': {
         description: 'User.Slot DELETE success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: { 'application/json': { schema: CountSchema } },
       },
     },
   })
