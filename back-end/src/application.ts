@@ -9,6 +9,16 @@ import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import {MySequence} from './sequence';
+import {registerAuthenticationStrategy, AuthenticationComponent} from '@loopback/authentication';
+import JWTAuthenticationStrategy from './a-strategy/jwt-strategy'
+import {
+  TokenServiceBindings,
+  UserServiceBindings,
+  TokenServiceConstants,
+  PasswordHasherBindings,
+} from './keys';
+import JWTService from './services/jwt-service.js'
+import MyUserService from './services/user-service.js'
 
 export class BackEndApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
@@ -16,8 +26,12 @@ export class BackEndApplication extends BootMixin(
   constructor(options: ApplicationConfig = {}) {
     super(options);
 
+    this.component(AuthenticationComponent);
+    registerAuthenticationStrategy(this, JWTAuthenticationStrategy);
     // Set up the custom sequence
     this.sequence(MySequence);
+
+    this.setUpBindings();
 
     // Set up default home page
     this.static('/', path.join(__dirname, '../public'));
@@ -39,4 +53,26 @@ export class BackEndApplication extends BootMixin(
       },
     };
   }
+
+  setUpBindings(): void {
+    // ...
+
+    this.bind(TokenServiceBindings.TOKEN_SECRET).to(
+      TokenServiceConstants.TOKEN_SECRET_VALUE,
+    );
+
+    this.bind(TokenServiceBindings.TOKEN_EXPIRES_IN).to(
+      TokenServiceConstants.TOKEN_EXPIRES_IN_VALUE,
+    );
+
+    this.bind(TokenServiceBindings.TOKEN_SERVICE).toClass(JWTService);
+    this.bind(PasswordHasherBindings.ROUNDS).to(10);
+    this.bind(PasswordHasherBindings.PASSWORD_HASHER).toClass(BcryptHasher);
+
+    this.bind(UserServiceBindings.USER_SERVICE).toClass(MyUserService);
+
+
+    // ...
+  }
+
 }

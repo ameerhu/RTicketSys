@@ -28,7 +28,9 @@
     "migrate": "node ./dist/migrate",
     "prestart": "npm run build",
     "start": "node -r source-map-support/register .",
-    "prepublishOnly": "npm run test"
+    "prepublishOnly": "npm run test",
+    "serve": "nodemon .",
+    "dev": "npm-run-all --parallel build:watch serve"
   },
   "repository": {
     "type": "git"
@@ -44,6 +46,7 @@
     "!*/__tests__"
   ],
   "dependencies": {
+    "@loopback/authentication": "^4.0.0",
     "@loopback/boot": "^2.0.0",
     "@loopback/context": "^3.0.0",
     "@loopback/core": "^2.0.0",
@@ -52,6 +55,7 @@
     "@loopback/rest": "^3.0.0",
     "@loopback/rest-explorer": "^2.0.0",
     "@loopback/service-proxy": "^2.0.0",
+    "loopback-connector-mongodb": "^4.0.0",
     "nodemon": "^2.0.2",
     "tslib": "^1.10.0"
   },
